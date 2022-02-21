@@ -1,31 +1,73 @@
-# Zenvia LaravelConnector
+# Laravel Zenvia
 
-## Install
-`composer require idez/laravel-zenvia`
+This package provides integration with the Zenvia API. It supports sending SMS messages.
 
-## Usage
-Write a few lines about the usage of this package.
+The package simply provides a `Zenvia` facade that acts as a wrapper to the [Zenvia API](https://zenvia.github.io/zenvia-openapi-spec/v2/#section/SMS-Text).
 
-## Testing
-Run the tests with:
+## Installation
 
-``` bash
-vendor/bin/phpunit
+You can install this package via Composer using:
+
+```bash
+composer require idez/laravel-zenvia
 ```
 
-## Changelog
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+You must also install the service provider.
+> Laravel 5.5+ users: this step may be skipped, as the package supports auto discovery.
 
-## Contributing
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+```php
+// config/app.php
+'providers' => [
+    ...
+    Idez\LaravelZenvia\ZenviaServiceProvider::class,
+    ...
+];
+```
 
-## Credits
+## Configuration
 
-- [iDez Digital](https://github.com/idez)
-- [All Contributors](https://github.com/idez/laravel-zenvia/contributors)
 
-## Security
-If you discover any security-related issues, please email developers@idez.com.br instead of using the issue tracker.
+Add the following snippet into your  `app/config/services.php`:
 
-## License
-The MIT License (MIT). Please see [License File](/LICENSE.md) for more information.
+```php
+// config/services.php
+    'zenvia' => [
+        'from' => env('ZENVIA_FROM', 'Laravel'),
+        'token' => env('ZENVIA_TOKEN'),
+    ],
+```
+
+
+Set your configuration using **environment variables**, either in your `.env` file or on your server's control panel:
+
+- `ZENVIA_FROM`
+
+An identifier, since many other senders may use the same short number. This will prefix your message contents.
+
+- `ZENVIA_TOKEN`
+
+Token for the authenticating account. You can grab a token inside Zenvia platform.
+
+## Usage
+
+```php
+<?php
+
+use Idez\LaravelZenvia\Zenvia;
+
+class MyClass {
+
+    public function __construct(private Zenvia $zenvia) {
+    }
+
+    public function addTicket() {
+        $this->zenvia->sms(
+            number: '552199999999',
+            message: 'Hello world'
+        );
+    }
+
+}
+```
+
+This package is available under the [MIT license](http://opensource.org/licenses/MIT).
