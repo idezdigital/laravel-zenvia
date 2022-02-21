@@ -46,7 +46,7 @@ An identifier, since many other senders may use the same short number. This will
 
 - `ZENVIA_TOKEN`
 
-Token for the authenticating account. You can grab a token inside Zenvia platform.
+Token for the authenticating account. Generate your token on the [API console](https://app.zenvia.com/home/api) on Zenvia platform.
 
 ## Usage
 
