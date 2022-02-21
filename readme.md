@@ -60,7 +60,7 @@ class MyClass {
     public function __construct(private Zenvia $zenvia) {
     }
 
-    public function addTicket() {
+    public function sendSMS() {
         $this->zenvia->sms(
             number: '552199999999',
             message: 'Hello world'
